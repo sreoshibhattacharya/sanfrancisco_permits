@@ -1,0 +1,32 @@
+from learntools.core import binder
+binder.bind(global())
+from learntools.data_cleaning.ex1 import *
+print('Setup complete')
+#modules to be used
+import pandas as pd 
+import numpy as np
+sf_permits = pd.read_csv(sf_permits)
+np.random.seed(0)
+sf_permits
+sf_permits.head()
+missing_values_count = sf_permits.isnull().sum()
+print(missing_values_count)
+total_cells = np.product(sf_permits.shape)
+total_missing_values = missing_values_count.sum()
+percent_missing = (total_missing_values/total_cells) * 100
+print(percent_missing)
+sf_permits["Street Number Suffix"].describe()
+sf_permits["Zipcode"].describe()
+sf_permits.dropna()
+columns_with_na_dropped = sf_permits.dropna(axis=1)
+columns_na_dropped.head()
+sf_permits_with_na_dropped = columns_with_na_dropped
+print("Columns in original dataset  : %d \n % sf_permits.shape[1])
+print("Columns with nas dropped : %d \n % sf_permits_with_na_dropped.shape[1])
+dropped_columns = columns_with_na_dropped
+subset_sf_permits = sf_permits.loc[:, "Permit Number" : " Record ID"].head()
+subset_sf_permits 
+subset_sf_permits.fillna(0)
+sf_permits_with_na_imputed = subset_sf_permits.fillna(method = "bfill", axis = 0).fillna(0)
+print(sf_permits_with_na_imputed)
+sf_permits_with_na_imputed.head()
